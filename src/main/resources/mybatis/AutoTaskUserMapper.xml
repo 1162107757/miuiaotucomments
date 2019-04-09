@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 映射文件，映射到对应的SQL接口 -->
+<mapper namespace="top.hjie.mapper.AutoTaskUserMapper">
+	
+	<select id="getAutoTaskUserUnlocck" resultType="autoTaskUser">
+		SELECT * FROM auto_task_user WHERE lockStatus = 0 AND taskStatus = 1 ORDER BY createTime ASC LIMIT 1
+	</select>
+	
+	<update id="updateAutoTaskUserLocck">
+		UPDATE auto_task_user SET lockStatus = 1,taskStatus = 2 WHERE atuId = #{atuId}
+	</update>
+
+	<update id="updateAutoTaskUserUnLocck">
+		UPDATE auto_task_user SET lockStatus = 0,taskStatus = 3 WHERE atuId = #{atuId}
+	</update>
+	
+	<select id="getAutoTaskUserByCookie" resultType="autoTaskUser">
+		SELECT * FROM auto_task_user WHERE cookie = #{cookie} LIMIT 1
+	</select>
+	<select id="getAutoTaskUserByIpAddress" resultType="autoTaskUser">
+		SELECT * FROM auto_task_user WHERE ipAddress = #{ipAddress} LIMIT 1
+	</select>
+	<select id="getAutoCommentTaskList" resultType="autoTaskUser">
+		SELECT a.* FROM auto_task_user a 
+		<where>
+			<if test="userCode != null and userCode != ''">
+				a.userCode LIKE '%${userCode}%'
+			</if>
+		</where>
+		ORDER BY a.createTime ASC
+	</select>
+	<select id="getAllStartIngUser" resultType="int">
+		SELECT COUNT(0) FROM auto_task_user WHERE taskStatus = 2
+	</select>
+	<update id="updateAutoTaskUserTaskStatus">
+		UPDATE auto_task_user SET taskStatus = #{taskStatus},lockStatus = 0 WHERE atuId = #{atuId}
+	</update>
+</mapper>
