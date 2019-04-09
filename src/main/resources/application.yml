@@ -4,7 +4,7 @@ server:
     
 # 英克正式库 默认数据源
 spring:
-    datasource.url: jdbc:mysql://47.100.175.30:3306/blog?characterEncoding=utf-8
+    datasource.url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf-8
     datasource.username: root
     datasource.password: hejie1996
     datasource.driverClassName: com.mysql.jdbc.Driver
